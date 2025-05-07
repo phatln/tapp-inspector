@@ -13,7 +13,17 @@ const rightOptions = [
 ];
 
 function processInput(input: string, left: string, right: string): string {
-  return `Left: ${left}, Right: ${right}, Input: ${input}`;
+  try {
+    const arr = JSON.parse(input);
+    if (!Array.isArray(arr) || arr.length === 0 || typeof arr[0] !== 'object') {
+      return 'Invalid input format';
+    }
+    const obj = arr[0];
+    const bytes = Object.values(obj).map((v) => Number(v));
+    return `Left: ${left}, Right: ${right}, Bytes: [${bytes.join(', ')}]`;
+  } catch (e) {
+    return 'Invalid JSON input';
+  }
 }
 
 export default function DropdownInputPage() {
